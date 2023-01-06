@@ -1,15 +1,22 @@
-import type { Atom, Fun } from "@reii/types";
+import type { Atom, Fun } from './types'
+
+export * from './types'
+
+export default atom
 
 export function atom<T>(value: T): Atom<T> {
         const set = new Set<Fun<T>>()
-        const ret = (() => value) as Atom<T>
-        ret.mount = (fun) => void set.add(fun)
-        ret.clean = (fun) => void set.delete(fun)
-        ret.flush = (next) => {
-                const isFun = typeof next === "function"
-                // @ts-ignore
-                value = isFun? next(value) : next
-                set.forEach(l => l(value))
+        const self = (() => value) as Atom<T>
+        /**
+         * mount and clean set as listener
+         */
+        self.mount = (fun) => void set.add(fun)
+        self.clean = (fun) => void set.delete(fun)
+        self.flush = (next) => {
+                value = typeof next === "function"
+                        ? (next as ((value: T) => T))(value)
+                        : next
+                set.forEach((listener) => listener(value))
         }
-        return ret
+        return self
 }
