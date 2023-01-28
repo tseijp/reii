@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Get, Set, Use } from './index'
 
-export default useAtomValue
-
 export const useAtomValue: Get = (atom) => {
         const [value, set] = useState(atom)
         /**
@@ -16,4 +14,6 @@ export const useAtomValue: Get = (atom) => {
 
 export const useSetAtom: Set = (atom) => (next) => atom.flush(next)
 
-export const useAtom: Use = (atom) => [useAtomValue(atom), atom]
+export const useAtom: Use = (atom) => [useAtomValue(atom), atom.flush]
+
+export default useAtom
