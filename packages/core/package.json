@@ -2,7 +2,7 @@
   "name": "reii",
   "author": "tseijp",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "module": "index.js",
   "types": "index.ts",
   "main": "index.cjs.js",
@@ -31,6 +31,8 @@
     "index.develop.js",
     "index.product.js",
     "index.ts",
+    "react.ts",
+    "solid.ts",
     "types.ts"
   ]
 }
